@@ -1,0 +1,39 @@
+.headerClass{
+    background-color: #E76C1F;
+    height: 128px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.headerClass > img{
+    margin-top: 49px;
+    margin-left: 119px;
+    height: 38px;
+    width: 93px;
+}
+
+.headerClass > button{
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 60px;
+    padding: 12px 25px;
+}
+
+
+@media screen and (min-width: 320px) and (max-width:699px) {
+
+    .headerClass{
+        height: 79px;
+    }
+
+    .headerClass > button{
+        display: none;
+    }
+
+    .headerClass > img{
+        margin-top: 18px;
+        margin-left: 16px;
+    }
+    
+}
