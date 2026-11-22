@@ -25,6 +25,33 @@
     padding: 12px 25px;
 }
 
+.heroSection{
+    background-image: url(./assets/img/hero.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 508px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position:relative
+}
+
+.iconWrapper {
+    position: absolute;
+    left: 50%;
+    bottom: -94px;
+    transform: translateX(-50%);
+}
+
+.iconWrapper img{
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    border: 13px solid #FDEADC;
+
+}
+
 main{
     min-height: 100vh;
 }
@@ -81,6 +108,24 @@ ul{
     .headerClass > img{
         margin-top: 18px;
         margin-left: 16px;
+    }
+
+    .heroSection{
+       
+        height: 346px;
+        border-radius: 16px;
+        margin: 10px;
+   
+    }
+
+    .iconWrapper{
+        bottom: -65px;
+    }
+
+    .iconWrapper img{
+        height: 120px;
+        width: 120px;
+
     }
 
     .footerClass{
