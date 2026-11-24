@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,11 @@
     <link rel="stylesheet" href="./style.css">
     <script src="./scripts/db.js"></script>
     <script src="./scripts/template.js"></script>
-    <script src="./scripts/script.js"></script>
+    <script defer src="./scripts/script.js"></script>
 
 </head>
-<body>
+
+<body onload="loadBurgerSandwich()">
 
     <header>
         <div class="headerClass">
@@ -31,34 +33,58 @@
 
         <div class="belowHero">
 
-        <div class="burgerText">
-            <h1>
-                <span class="red">Burger</span>House
-            </h1>
+            <div class="burgerText">
+                <h1>
+                    <span class="red">Burger</span>House
+                </h1>
 
-        <div class="rating">
-            <p class="star"> &#9733;</p>
-            <p style="font-weight: bold;">4,1</p>
-            <p>(317)</p>
-        </div>
-       
-        </div>
-          <h6>The best of Burgers, Pizza, and Greens, all in one great place.</h6>
-    </div>
+                <div class="rating">
+                    <p class="star"> &#9733;</p>
+                    <p style="font-weight: bold;">4,1</p>
+                    <p>(317)</p>
+                </div>
 
-    
+            </div>
+            <h6>The best of Burgers, Pizza, and Greens, all in one great place.</h6>
+        </div>
+
+
+
+
         <div class="menuHeading">
             <img src="./assets/img/Burger.png">
             <h3>Burgers & Sandwiches</h3>
         </div>
 
-        <div id="burgersSandwich">
-            
+        <div class="menuWithBasket">
+            <div id="burgersSandwich" class="dishes">
+            </div>
+
+            <aside id="myBasket">
+            <!--    <div id="emptyBasket" class="emptyBasket">
+
+                    <p>Your Basket</p>
+                    <p>Nothing here yet.<br>
+                    Go ahead and choose something delicious!
+                    </p>
+                    
+                    <img src="./assets/img/basket.png" alt="basket">
+
+                </div> --> 
+                <div class="basketWithDish" id="basketWithDish">
+
+                </div>
+            </aside>
+
         </div>
 
-    
+
 
     </main>
+
+
+
+
 
     <footer>
         <div class="footerClass">
@@ -70,33 +96,34 @@
         <div class="footerMobile">
             <nav>
                 <ul class="footerMobile_wrapper">
-                <li>
-                    <a href="#">
-                        <img src="./assets/icons/Home.png">
-                    </a>
-                </li>
+                    <li>
+                        <a href="#">
+                            <img src="./assets/icons/Home.png">
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="#">
-                        <img src="./assets/icons/person.png">
-                    </a>
-                </li>
+                    <li>
+                        <a href="#">
+                            <img src="./assets/icons/person.png">
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="#">
-                        <img src="./assets/icons/takeout_dining_2.png">
-                    </a>
-                </li>
+                    <li>
+                        <a href="#">
+                            <img src="./assets/icons/takeout_dining_2.png">
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="#">
-                        <img src="./assets/icons/shopping_cart.png">
-                    </a>
-                </li>
+                    <li>
+                        <a href="#">
+                            <img src="./assets/icons/shopping_cart.png">
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
     </footer>
-    
+
 </body>
+
 </html>
