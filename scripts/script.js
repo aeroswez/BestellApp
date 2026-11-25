@@ -10,9 +10,9 @@ function loadBurgerSandwich(){
     for(let index = 0 ; index< myDishes[0]["burger&Sandwich"].length; index++){
         let price = myDishes[0]["burger&Sandwich"][index].price;
         
-        let priceNumber = parseFloat(price);
+        price = Number(price).toFixed(2);
        
-        let convertedPrice= price.toFixed(2).replace(".",",");
+        let convertedPrice= price.replace(".",",");
         let convertedPriceWithEuro= convertedPrice + "€";
         
         burgerRef.innerHTML += `<div class="subMenuWrapper">
@@ -23,7 +23,7 @@ function loadBurgerSandwich(){
                                     </div>
                                     <div class= "subMenuPrice">
                                     <h4>${convertedPriceWithEuro}</h4>
-                                    <button class= "subMenuButton" id= "button_${index}" onclick="addToBasket(${index},'${myDishes[0]["burger&Sandwich"][index].name}',${priceNumber})">
+                                    <button class= "subMenuButton" id= "button_${index}" onclick="addToBasket(${index},'${myDishes[0]["burger&Sandwich"][index].name}',${price})">
                                     Add to basket</button>
                                     </div>  
                                 </div>`
@@ -34,6 +34,9 @@ function loadBurgerSandwich(){
 }
 
 function addToBasket(index,item,price){
+    let emptyBasketRef = document.getElementById("emptyBasket");
+    emptyBasketRef.style.display = "none";
+    price= parseFloat(price).toFixed(2);
     let menuItemIndex = basketItem.indexOf(item);
     if(menuItemIndex == -1){
    
@@ -48,7 +51,7 @@ function addToBasket(index,item,price){
 
         
         itemAmounts[menuItemIndex]++;
-        let increasedPrice = itemAmounts[menuItemIndex]*price;
+        let increasedPrice = parseFloat(itemAmounts[menuItemIndex]*price).toFixed(2);
         basketItemPrice[menuItemIndex]= increasedPrice;
         
     }
@@ -74,19 +77,28 @@ function renderItemsInBasket(item){
 
    
 function decreaseAmount(item){
+    let emptyBasketRef = document.getElementById("emptyBasket");
     let menuItemIndex = basketItem.indexOf(item);
     let amountOfItem = itemAmounts[menuItemIndex];
     let price = basketItemPrice[menuItemIndex]/amountOfItem;
     let decreasedAmount = amountOfItem - 1;
-    let decreasedPrice = decreasedAmount*price;
-    console.log("decreasedprice", decreasedPrice);
+
    
     if(decreasedAmount >= 1){
+    let decreasedPrice = parseFloat(decreasedAmount*price).toFixed(2);
     itemAmounts[menuItemIndex]= decreasedAmount;
     basketItemPrice[menuItemIndex]= decreasedPrice;
-
     renderItemsInBasket(item);
+
     }
+    else if(decreasedAmount == 0){
+        basketItem.splice(menuItemIndex, 1)
+        console.log(basketItem);
+        renderItemsInBasket(item);
+
+        
+    }
+    
 
 }
 
@@ -96,7 +108,7 @@ function increaseAmount(item){
     let amountOfItem = itemAmounts[menuItemIndex];
     let price = basketItemPrice[menuItemIndex]/amountOfItem;
     let increasedAmount = amountOfItem + 1;
-    let increasedPrice = increasedAmount*price;
+    let increasedPrice = parseFloat(increasedAmount*price).toFixed(2);
     
    
     if(increasedAmount >= 0){
