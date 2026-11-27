@@ -6,7 +6,9 @@ function showItemsInBasketTemplate(basketIndex){
                             </div>
                             <div class= "priceAmount">
                             <div class= "amount">
-                            <button onclick="decreaseAmount('${item}')">-</button>
+                            <button type="button" onclick="decreaseAmount('${item}')">
+                                ${itemAmounts[basketIndex] === 1 ? '<img src="./assets/img/delete.svg" alt="">' : "-"}
+                            </button>
                             <p id="${item}_${itemAmounts[basketIndex]}">${itemAmounts[basketIndex]}</p>
                             <button onclick="increaseAmount('${item}')">+</button>
                             </div>

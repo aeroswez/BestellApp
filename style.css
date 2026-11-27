@@ -235,6 +235,7 @@ aside{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    font-size: 22px;
 }
 
 .priceAmount{
@@ -251,6 +252,16 @@ aside{
     border: none;
     font-size: 22px;
 
+}
+
+.amount > button img{
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.amount > p{
+    font-size: 22px;
 }
 
 .footerClass{
