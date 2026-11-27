@@ -12,7 +12,8 @@ function showItemsInBasketTemplate(basketIndex){
                             <p id="${item}_${itemAmounts[basketIndex]}">${itemAmounts[basketIndex]}</p>
                             <button onclick="increaseAmount('${item}')">+</button>
                             </div>
-                            <p>${basketItemPrice[basketIndex]}</p>
+                            <p>${basketItemPrice[basketIndex]}€</p>
+                            </div>
                             </div>
                             </div>`
 }

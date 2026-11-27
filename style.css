@@ -224,6 +224,15 @@ aside{
     flex-direction: column;
     gap:10px;
     padding: 59px 31px;
+    height: 355px;
+}
+
+.basketHeading > p{
+    text-align: center;
+    font-size: 32px;
+    color: white;
+
+
 }
 
 .addedDish{
@@ -262,6 +271,29 @@ aside{
 
 .amount > p{
     font-size: 22px;
+}
+
+.totalPrice {
+    color: white;
+    font-size: 20px;
+}
+
+.subTotal{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+
+.shipping{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+
+.total{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
 }
 
 .footerClass{

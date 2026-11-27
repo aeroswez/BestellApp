@@ -109,48 +109,36 @@ function addToBasket(index,item,price){
 
 
 
-function loadPizza(){
-    for(let index = 0 ; index< dishNames.length; index++){
-        const categoryKey = dishNames[index];
-        for(let j = 0; j < myDishes[index][categoryKey].length ; j++){
-        
-        let price = myDishes[index][categoryKey][j].price;
-        
-        price = Number(price).toFixed(2);
-       
-        let convertedPrice= price.replace(".",",");
-        let convertedPriceWithEuro= convertedPrice + "€";
-        
-        pizzaRef.innerHTML += `<div class="subMenuWrapper">
-                                    <div class= "subMenu">
-                                    <div class="subMenuDesc">
-                                    <h4>${myDishes[index][categoryKey][j].name}</h4>
-                                    <p>${myDishes[index][categoryKey][j].description}</p>
-                                    </div>
-                                    <div class= "subMenuPrice">
-                                    <h4>${convertedPriceWithEuro}</h4>
-                                    <button class= "subMenuButton" id= "button_${dishNames[index]}{j}" onclick="addToBasket(${index},'${myDishes[index][categoryKey][j].name}',${price})">
-                                    Add to basket</button>
-                                    </div>  
-                                </div>`
-     
-
-    }
-}
-
-}
-
 function renderItemsInBasket(){
 
     const basketRef=document.getElementById("basketWithDish");
-    basketRef.innerHTML = "";
+    basketRef.innerHTML = `<div class="basketHeading"><p>Your Basket</p></div>`;
     const emptyBasketRef= document.getElementById("emptyBasket");
     emptyBasketRef.style.display = basketItem.length === 0 ? "" : "none";
+    let basketSum = 0;
+    const deliveryFee = 4.99;
 
     for(let basketIndex = 0; basketIndex< basketItem.length; basketIndex++){
+        basketSum +=parseFloat(basketItemPrice[basketIndex]);
 
         basketRef.innerHTML+= showItemsInBasketTemplate(basketIndex);
 
+    }
+
+    let totalPrice = parseFloat(basketSum) + parseFloat(deliveryFee);
+    console.log("basket sum", basketSum);
+
+    basketRef.innerHTML +=`<div class= "totalPrice">
+                            <div class = "sumPrice">
+                            <div class = "subTotal">
+                            <p> Subtotal</p><p>${parseFloat(basketSum.toFixed(2))}€</p></div>
+                            <div class= "shipping"><p>Delivery fee </p>
+                            <p>${deliveryFee}€</p></div> <hr>
+                            <div class = "total"><p>Total</p>
+                            <p>${parseFloat(totalPrice.toFixed(2))}€</p></div></div>`;
+
+    if(basketItem.length>3){
+        document.getElementById("basketWithDish").style.overflowY="scroll";
     }
 
 }
