@@ -14,6 +14,5 @@ function showItemsInBasketTemplate(basketIndex){
                             </div>
                             <p>${basketItemPrice[basketIndex]}€</p>
                             </div>
-                            </div>
                             </div>`
 }

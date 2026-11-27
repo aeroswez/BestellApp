@@ -32,7 +32,7 @@ function loadBurgerSandwich(){
                                     </div>
                                     <div class= "subMenuPrice">
                                     <h4>${convertedPriceWithEuro}</h4>
-                                    <button class= "subMenuButton" id= "button_${dishNames[index]}{j}" onclick="addToBasket(${index},'${myDishes[index][categoryKey][j].name}',${price})">
+                                    <button class= "subMenuButton" id= "button_${index}_${j}" onclick="addToBasket(${index},${j})">
                                     Add to basket</button>
                                     </div>  
                                 </div>`
@@ -50,7 +50,7 @@ function loadBurgerSandwich(){
                                     </div>
                                     <div class= "subMenuPrice">
                                     <h4>${convertedPriceWithEuro}</h4>
-                                    <button class= "subMenuButton" id= "button_${dishNames[index]}{j}" onclick="addToBasket(${index},'${myDishes[index][categoryKey][j].name}',${price})">
+                                    <button class= "subMenuButton" id= "button_${index}_${j}" onclick="addToBasket(${index},${j})">
                                     Add to basket</button>
                                     </div>  
                                 </div>`
@@ -68,7 +68,7 @@ function loadBurgerSandwich(){
                                     </div>
                                     <div class= "subMenuPrice">
                                     <h4>${convertedPriceWithEuro}</h4>
-                                    <button class= "subMenuButton" id= "button_${dishNames[index]}{j}" onclick="addToBasket(${index},'${myDishes[index][categoryKey][j].name}',${price})">
+                                    <button class= "subMenuButton" id= "button_${index}_${j}" onclick="addToBasket(${index},${j})">
                                     Add to basket</button>
                                     </div>  
                                 </div>`
@@ -80,16 +80,20 @@ function loadBurgerSandwich(){
 }
 }
 
-function addToBasket(index,item,price){
+function addToBasket(categoryIndex,itemIndex){
     let emptyBasketRef = document.getElementById("emptyBasket");
     emptyBasketRef.style.display = "none";
-    price= parseFloat(price).toFixed(2);
+    const categoryKey = dishNames[categoryIndex];
+    const dish = myDishes[categoryIndex][categoryKey][itemIndex];
+    const item = dish.name;
+    const price = parseFloat(dish.price).toFixed(2);
     let menuItemIndex = basketItem.indexOf(item);
     if(menuItemIndex == -1){
    
         basketItem.push(item);
         basketItemPrice.push(price);
-        itemAmounts.push(1);    
+        itemAmounts.push(1);
+        menuItemIndex = basketItem.length - 1;
 
     }
 
@@ -101,10 +105,22 @@ function addToBasket(index,item,price){
         
     }
 
+    updateAddToBasketButton(item, itemAmounts[menuItemIndex]);
     renderItemsInBasket();
+}
 
-    const addButtonRef = document.getElementById()
-    
+function updateAddToBasketButton(item, amount){
+    for(let categoryIndex = 0; categoryIndex < myDishes.length; categoryIndex++){
+        const categoryKey = dishNames[categoryIndex];
+        const itemIndex = myDishes[categoryIndex][categoryKey].findIndex(dish => dish.name === item);
+        if(itemIndex !== -1){
+            const buttonRef = document.getElementById(`button_${categoryIndex}_${itemIndex}`);
+            if(buttonRef){
+                buttonRef.textContent = amount > 0 ? `Added (${amount})` : "Add to basket";
+            }
+            return;
+        }
+    }
 }
 
 
@@ -112,7 +128,7 @@ function addToBasket(index,item,price){
 function renderItemsInBasket(){
 
     const basketRef=document.getElementById("basketWithDish");
-    basketRef.innerHTML = `<div class="basketHeading"><p>Your Basket</p></div>`;
+    let basketItems = "";
     const emptyBasketRef= document.getElementById("emptyBasket");
     emptyBasketRef.style.display = basketItem.length === 0 ? "" : "none";
     let basketSum = 0;
@@ -120,15 +136,15 @@ function renderItemsInBasket(){
 
     for(let basketIndex = 0; basketIndex< basketItem.length; basketIndex++){
         basketSum +=parseFloat(basketItemPrice[basketIndex]);
-
-        basketRef.innerHTML+= showItemsInBasketTemplate(basketIndex);
-
+        basketItems += showItemsInBasketTemplate(basketIndex);
     }
 
     let totalPrice = parseFloat(basketSum) + parseFloat(deliveryFee);
-    console.log("basket sum", basketSum);
+   
 
-    basketRef.innerHTML +=`<div class= "totalPrice">
+    basketRef.innerHTML = `<div class="basketHeading"><p>Your Basket</p></div>
+                            <div class="basketItems">${basketItems}</div>
+                            <div class="totalPrice">
                             <div class = "sumPrice">
                             <div class = "subTotal">
                             <p> Subtotal</p><p>${parseFloat(basketSum.toFixed(2))}€</p></div>
@@ -136,11 +152,7 @@ function renderItemsInBasket(){
                             <p>${deliveryFee}€</p></div> <hr>
                             <div class = "total"><p>Total</p>
                             <p>${parseFloat(totalPrice.toFixed(2))}€</p></div>
-                            <button class= "buyNow">Buy Now (${parseFloat(totalPrice.toFixed(2))}€)</button></div>`;
-
-    if(basketItem.length>3){
-        document.getElementById("basketWithDish").style.overflowY="scroll";
-    }
+                            <button class= "buyNow" onclick= "renderOrderConfirmation()">Buy Now (${parseFloat(totalPrice.toFixed(2))}€)</button></div></div>`;
 
 }
 
@@ -157,6 +169,7 @@ function decreaseAmount(item){
     let decreasedPrice = parseFloat(decreasedAmount*price).toFixed(2);
     itemAmounts[menuItemIndex]= decreasedAmount;
     basketItemPrice[menuItemIndex]= decreasedPrice;
+    updateAddToBasketButton(item, decreasedAmount);
     renderItemsInBasket();
 
     }
@@ -164,6 +177,7 @@ function decreaseAmount(item){
         basketItem.splice(menuItemIndex, 1);
         basketItemPrice.splice(menuItemIndex, 1);
         itemAmounts.splice(menuItemIndex, 1);
+        updateAddToBasketButton(item, 0);
         renderItemsInBasket();
 
         
@@ -185,9 +199,25 @@ function increaseAmount(item){
     itemAmounts[menuItemIndex]= increasedAmount;
     basketItemPrice[menuItemIndex]= increasedPrice;
 
+    updateAddToBasketButton(item, increasedAmount);
     renderItemsInBasket();
     }
 
+}
+
+function renderOrderConfirmation(){
+    let dialogRef = document.getElementById("dialogContainer");
+    dialogRef.innerHTML = `<dialog id="showConfirmation" class= "confimrationDialog">
+                            <header><img src= "./assets/img/delivery.png">
+                            </header>
+                            <section><p>Order confirmed!</p>
+                            <p>Your food is on the way!</p></section></dialog>`;
+    
+    const dialogElement = document.getElementById("showConfirmation");
+    dialogElement.showModal();
+    setTimeout(() => {
+  if (dialogElement.open) dialogElement.close();
+}, 3000);
 }
 
 

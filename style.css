@@ -186,13 +186,23 @@ h6{
 }
 
 aside{
-    
+    display: flex;
+    flex-direction: column;
     width: 435px;
     height:794px;
     background-color: #363534;
     float: right;
     position:sticky;
     top:16px;
+}
+
+.confimrationDialog{
+    background-color: #363534;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    color: white;
+
 }
 
 .emptyBasket{
@@ -223,9 +233,42 @@ aside{
     display: flex;
     flex-direction: column;
     gap:10px;
-    padding: 59px 31px;
-    height: 355px;
+    padding: 40px 31px 25px;
+    flex: 1;
+    min-height: 0;
 }
+
+.basketWithDish:empty{
+    display: none;
+}
+
+.basketItems{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 370px;
+    flex: 0 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 10px;
+    scrollbar-color: #FDEADC transparent;
+    scrollbar-width: thin;
+}
+
+.basketItems::-webkit-scrollbar{
+    width: 6px;
+}
+
+.basketItems::-webkit-scrollbar-track{
+    background: transparent;
+}
+
+.basketItems::-webkit-scrollbar-thumb{
+    background-color: #FDEADC;
+    border-radius: 10px;
+}
+
+
 
 .basketHeading > p{
     text-align: center;
@@ -235,8 +278,17 @@ aside{
 
 }
 
+.totalPrice{
+    flex-shrink: 0;
+}
+
+.dishWrapper{
+    
+}
+
 .addedDish{
     height: auto;
+    flex-shrink: 0;
     background-color: #FDEADC;
     border-radius: 20px;
     padding:20px;
