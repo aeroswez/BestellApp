@@ -89,14 +89,12 @@ function addToBasket(index,item,price){
    
         basketItem.push(item);
         basketItemPrice.push(price);
-        itemAmounts.push(1);
-        
+        itemAmounts.push(1);    
 
     }
 
     else{
-
-        
+ 
         itemAmounts[menuItemIndex]++;
         let increasedPrice = parseFloat(itemAmounts[menuItemIndex]*price).toFixed(2);
         basketItemPrice[menuItemIndex]= increasedPrice;
@@ -104,6 +102,8 @@ function addToBasket(index,item,price){
     }
 
     renderItemsInBasket();
+
+    const addButtonRef = document.getElementById()
     
 }
 
@@ -135,7 +135,8 @@ function renderItemsInBasket(){
                             <div class= "shipping"><p>Delivery fee </p>
                             <p>${deliveryFee}€</p></div> <hr>
                             <div class = "total"><p>Total</p>
-                            <p>${parseFloat(totalPrice.toFixed(2))}€</p></div></div>`;
+                            <p>${parseFloat(totalPrice.toFixed(2))}€</p></div>
+                            <button class= "buyNow">Buy Now (${parseFloat(totalPrice.toFixed(2))}€)</button></div>`;
 
     if(basketItem.length>3){
         document.getElementById("basketWithDish").style.overflowY="scroll";

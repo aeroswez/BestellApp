@@ -273,7 +273,10 @@ aside{
     font-size: 22px;
 }
 
-.totalPrice {
+.sumPrice {
+    display: flex;
+    flex-direction: column;
+    gap:20px;
     color: white;
     font-size: 20px;
 }
@@ -282,6 +285,7 @@ aside{
     display: flex;
     justify-content: space-between;
     padding-bottom: 10px;
+    padding-top: 10px;
 }
 
 .shipping{
@@ -294,6 +298,18 @@ aside{
     display: flex;
     justify-content: space-between;
     padding-top: 10px;
+}
+
+.buyNow{
+
+    background-color: #E76C1F;
+    color: white;
+    border-radius: 60px;
+    padding: 13px 20px;
+    font-size: 25px;
+    border: none;
+   
+
 }
 
 .footerClass{
