@@ -1,4 +1,5 @@
-function showItemsInBasketTemplate(item, basketIndex){
+function showItemsInBasketTemplate(basketIndex){
+    const item = basketItem[basketIndex];
     return `<div class = "addedDish" id="${item}">
                             <div>
                             <p>${itemAmounts[basketIndex]} X ${basketItem[basketIndex]}</p>

@@ -1,29 +1,38 @@
 const burgerRef = document.getElementById("burgersSandwich");
+const pizzaRef = document.getElementById("pizza");
+const saladRef = document.getElementById("salad");
 console.log(myDishes[0]["burger&Sandwich"].length);
 let count=0;
+
+let dishNames = myDishes.map(obj => Object.keys(obj)[0]);
 let basketItem = [];
 let basketItemPrice = [];
 let itemAmounts = [];
 burgerRef.innerHTML="";
 
 function loadBurgerSandwich(){
-    for(let index = 0 ; index< myDishes[0]["burger&Sandwich"].length; index++){
-        let price = myDishes[0]["burger&Sandwich"][index].price;
+    for(let index = 0 ; index< dishNames.length; index++){
+        const categoryKey = dishNames[index];
+        for(let j = 0; j < myDishes[index][categoryKey].length ; j++){
+        
+        let price = myDishes[index][categoryKey][j].price;
         
         price = Number(price).toFixed(2);
        
         let convertedPrice= price.replace(".",",");
         let convertedPriceWithEuro= convertedPrice + "€";
-        
+
+        if(dishNames[index]=="burger&Sandwich") {
+
         burgerRef.innerHTML += `<div class="subMenuWrapper">
                                     <div class= "subMenu">
                                     <div class="subMenuDesc">
-                                    <h4>${myDishes[0]["burger&Sandwich"][index].name}</h4>
-                                    <p>${myDishes[0]["burger&Sandwich"][index].description}</p>
+                                    <h4>${myDishes[index][categoryKey][j].name}</h4>
+                                    <p>${myDishes[index][categoryKey][j].description}</p>
                                     </div>
                                     <div class= "subMenuPrice">
                                     <h4>${convertedPriceWithEuro}</h4>
-                                    <button class= "subMenuButton" id= "button_${index}" onclick="addToBasket(${index},'${myDishes[0]["burger&Sandwich"][index].name}',${price})">
+                                    <button class= "subMenuButton" id= "button_${dishNames[index]}{j}" onclick="addToBasket(${index},'${myDishes[index][categoryKey][j].name}',${price})">
                                     Add to basket</button>
                                     </div>  
                                 </div>`
@@ -31,6 +40,44 @@ function loadBurgerSandwich(){
 
     }
 
+    else if (dishNames[index]=="Pizza (30cm)") {
+
+         pizzaRef.innerHTML += `<div class="subMenuWrapper">
+                                    <div class= "subMenu">
+                                    <div class="subMenuDesc">
+                                    <h4>${myDishes[index][categoryKey][j].name}</h4>
+                                    <p>${myDishes[index][categoryKey][j].description}</p>
+                                    </div>
+                                    <div class= "subMenuPrice">
+                                    <h4>${convertedPriceWithEuro}</h4>
+                                    <button class= "subMenuButton" id= "button_${dishNames[index]}{j}" onclick="addToBasket(${index},'${myDishes[index][categoryKey][j].name}',${price})">
+                                    Add to basket</button>
+                                    </div>  
+                                </div>`
+     
+
+    }
+
+    else if (dishNames[index]=="Salad"){
+
+         saladRef.innerHTML += `<div class="subMenuWrapper">
+                                    <div class= "subMenu">
+                                    <div class="subMenuDesc">
+                                    <h4>${myDishes[index][categoryKey][j].name}</h4>
+                                    <p>${myDishes[index][categoryKey][j].description}</p>
+                                    </div>
+                                    <div class= "subMenuPrice">
+                                    <h4>${convertedPriceWithEuro}</h4>
+                                    <button class= "subMenuButton" id= "button_${dishNames[index]}{j}" onclick="addToBasket(${index},'${myDishes[index][categoryKey][j].name}',${price})">
+                                    Add to basket</button>
+                                    </div>  
+                                </div>`
+     
+
+    }
+}
+
+}
 }
 
 function addToBasket(index,item,price){
@@ -56,29 +103,62 @@ function addToBasket(index,item,price){
         
     }
 
-    renderItemsInBasket(item);
-
+    renderItemsInBasket();
     
 }
 
-function renderItemsInBasket(item){
+
+
+function loadPizza(){
+    for(let index = 0 ; index< dishNames.length; index++){
+        const categoryKey = dishNames[index];
+        for(let j = 0; j < myDishes[index][categoryKey].length ; j++){
+        
+        let price = myDishes[index][categoryKey][j].price;
+        
+        price = Number(price).toFixed(2);
+       
+        let convertedPrice= price.replace(".",",");
+        let convertedPriceWithEuro= convertedPrice + "€";
+        
+        pizzaRef.innerHTML += `<div class="subMenuWrapper">
+                                    <div class= "subMenu">
+                                    <div class="subMenuDesc">
+                                    <h4>${myDishes[index][categoryKey][j].name}</h4>
+                                    <p>${myDishes[index][categoryKey][j].description}</p>
+                                    </div>
+                                    <div class= "subMenuPrice">
+                                    <h4>${convertedPriceWithEuro}</h4>
+                                    <button class= "subMenuButton" id= "button_${dishNames[index]}{j}" onclick="addToBasket(${index},'${myDishes[index][categoryKey][j].name}',${price})">
+                                    Add to basket</button>
+                                    </div>  
+                                </div>`
+     
+
+    }
+}
+
+}
+
+function renderItemsInBasket(){
 
     const basketRef=document.getElementById("basketWithDish");
     basketRef.innerHTML = "";
     const emptyBasketRef= document.getElementById("emptyBasket");
+    emptyBasketRef.style.display = basketItem.length === 0 ? "" : "none";
 
-    for(basketIndex = 0; basketIndex< basketItem.length; basketIndex++){
+    for(let basketIndex = 0; basketIndex< basketItem.length; basketIndex++){
 
-        basketRef.innerHTML+= showItemsInBasketTemplate(item, basketIndex);
+        basketRef.innerHTML+= showItemsInBasketTemplate(basketIndex);
 
     }
 
 }
 
-   
 function decreaseAmount(item){
-    let emptyBasketRef = document.getElementById("emptyBasket");
     let menuItemIndex = basketItem.indexOf(item);
+    if(menuItemIndex === -1) return;
+
     let amountOfItem = itemAmounts[menuItemIndex];
     let price = basketItemPrice[menuItemIndex]/amountOfItem;
     let decreasedAmount = amountOfItem - 1;
@@ -88,13 +168,14 @@ function decreaseAmount(item){
     let decreasedPrice = parseFloat(decreasedAmount*price).toFixed(2);
     itemAmounts[menuItemIndex]= decreasedAmount;
     basketItemPrice[menuItemIndex]= decreasedPrice;
-    renderItemsInBasket(item);
+    renderItemsInBasket();
 
     }
     else if(decreasedAmount == 0){
-        basketItem.splice(menuItemIndex, 1)
-        console.log(basketItem);
-        renderItemsInBasket(item);
+        basketItem.splice(menuItemIndex, 1);
+        basketItemPrice.splice(menuItemIndex, 1);
+        itemAmounts.splice(menuItemIndex, 1);
+        renderItemsInBasket();
 
         
     }
@@ -115,7 +196,7 @@ function increaseAmount(item){
     itemAmounts[menuItemIndex]= increasedAmount;
     basketItemPrice[menuItemIndex]= increasedPrice;
 
-    renderItemsInBasket(item);
+    renderItemsInBasket();
     }
 
 }

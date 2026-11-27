@@ -113,6 +113,15 @@ h6{
     
 }
 
+.menuWrapper{
+    width: 100%;
+}
+
+.menuAndBasket{
+    display: flex;
+    justify-content: space-between;
+}
+
 .menuHeading > img{
     transform: translateY(-15px);
     padding-left: 100px;
@@ -171,6 +180,8 @@ h6{
     display: flex;
     align-items: flex-start;
     gap: 30px;
+    margin-top: 20px;
+    margin-bottom: 50px;
     
 }
 
@@ -212,6 +223,7 @@ aside{
     display: flex;
     flex-direction: column;
     gap:10px;
+    padding: 59px 31px;
 }
 
 .addedDish{
@@ -220,6 +232,25 @@ aside{
     border-radius: 20px;
     padding:20px;
     color: black;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.priceAmount{
+    display: flex;
+    justify-content: space-between;
+}
+
+.amount{
+    display: flex;
+}
+
+.amount > button {
+    background-color: transparent;
+    border: none;
+    font-size: 22px;
+
 }
 
 .footerClass{
